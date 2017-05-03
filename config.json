@@ -1,14 +1,14 @@
 {
   "development": {
     "port": 3000,
-    "name": "Stevens Scheduler 2.0",
+    "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
     "server": "http://localhost:3000",
     "session": {
       "secret": "cats"
     },
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
-      "database": "stevens-scheduler-2"
+      "database": "vets4warriors-clr"
     },
     "auth": {
       "google": {
@@ -18,14 +18,14 @@
   },
   "production": {
     "port": 3000,
-    "name": "Stevens Scheduler 2.0",
+    "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
     "server": "",
     "session": {
       "secret": "dogs"
     },
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
-      "database": "stevens-scheduler-2"
+      "database": "vets4warriors-clr"
     },
     "logs": {
       "accessFilename": "access.log",
@@ -41,14 +41,14 @@
   },
   "testing": {
     "port": 3001,
-    "name": "Stevens Scheduler 2.0",
+    "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
     "server": "http://localhost:3001",
     "session": {
       "secret": "pickles"
     },
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
-      "database": "test-stevens-scheduler-2"
+      "database": "test-vets4warriors-clr"
     },
     "auth": {
       "google": {

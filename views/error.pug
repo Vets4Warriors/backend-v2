@@ -1,8 +1,0 @@
-extends layouts/main
-
-append scripts
-	script(type='text/javascript' src='/error.bundle.js')
-
-block content
-	h1 #{errorCode}
-	p #{errorDescription}

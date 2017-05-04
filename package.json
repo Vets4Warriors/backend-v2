@@ -33,9 +33,15 @@
     "http-errors": "^1.6.1",
     "http-status-codes": "^1.1.6",
     "mongoose": "^4.9.3",
+    "mongoose-geojson-schema": "^2.1.2",
+    "mongoose-paginate": "^5.0.3",
+    "mongoose-schema-extend": "^0.2.2",
+    "mongoose-type-email": "^1.0.5",
     "mongoose-type-url": "^1.0.2",
+    "mongoose-version": "^1.1.0",
     "passport": "^0.3.2",
     "passport-google-oauth20": "^1.0.0",
+    "request": "^2.81.0",
     "request-promise-native": "^1.0.3",
     "require-directory": "^2.1.1",
     "winston": "^2.3.1"
@@ -51,7 +57,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-react": "^6.10.3",
     "eslint-to-editorconfig": "^1.2.0",
     "mocha": "^3.2.0"
-   }
+  }
 }

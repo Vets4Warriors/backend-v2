@@ -42,6 +42,10 @@ if (app.get('env') === 'production') {
   // The dist directory in the client is where angular builds to
   // In development, will be run separately
   app.use(express.static(path.join(__dirname, 'client', 'dist')));
+  app.get('*', (req, res) => {
+    // Send to the index
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  });
 
   // @see https://expressjs.com/en/advanced/best-practice-performance.html#in-code
   // Compress everything

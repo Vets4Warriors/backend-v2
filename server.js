@@ -9,7 +9,7 @@ const config = require('./lib/utils/config');
 const { httpLogger, logger } = require('./lib/utils/loggers');
 const { errorHandler, devErrorHandler, errorReporter } = require('./lib/errors');
 const mongoConnect = require('./lib/utils/mongo');
-const router = require('./lib/routes');
+const apiRouter = require('./lib/routes');
 
 const app = express();
 app.set('env', config.env);
@@ -35,7 +35,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Route setup
-app.use(router);
+app.use('/api', apiRouter);
+
+// Send our frontend client app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist/index.html'))
+});
 
 if (app.get('env') === 'production') {
   // Static directory

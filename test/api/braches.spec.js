@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 chai.should();
 
-const baseUrl = '/branches';
+const baseUrl = '/api/branches';
 
 describe('Branches API', () => {
   before(() => {

@@ -111,3 +111,6 @@ fabric.properties
 
 # Build / distribution
 dist
+
+# The submodule
+client

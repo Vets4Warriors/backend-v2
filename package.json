@@ -2,11 +2,14 @@
   "name": "backend-v2",
   "version": "2.0.0",
   "description": "Vets 4 Warriors Counselor Laptop Resource Version 2 Backend",
-  "main": "index.js",
+  "main": "server.js",
+  "engines": {
+    "node": ">=7.6.0"
+  },
   "scripts": {
-    "start": "node app.js",
-    "start-prod": "./node_modules/.bin/cross-env NODE_ENV=production node app.js",
-    "test": "./node_modules/.bin/cross-env NODE_ENV=testing ./node_modules/.bin/mocha --reporter=nyan ./test/**/*.js",
+    "start": "node server.js",
+    "start-prod": "./node_modules/.bin/cross-env NODE_ENV=production node server.js",
+    "test": "./node_modules/.bin/cross-env NODE_ENV=testing ./node_modules/.bin/mocha --reporter=nyan ./test/**/*.spec.js",
     "lint": "./node_modules/.bin/eslint --fix --ext .js lib/**",
     "clean": "rm -rf logs"
   },
@@ -57,6 +60,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-react": "^6.10.3",
     "eslint-to-editorconfig": "^1.2.0",
     "mocha": "^3.2.0"

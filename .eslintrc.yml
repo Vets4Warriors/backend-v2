@@ -4,8 +4,13 @@ env:
   browser: false
   node: true
 
+plugins:
+  - "node"
+
 extends:
-    "airbnb"
+  - "airbnb"
+  - "eslint:recommended"
+  - "plugin:node/recommended"
 
 rules:
   vars-on-top: 0

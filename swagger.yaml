@@ -126,6 +126,7 @@ definitions:
         properties:
           id:
             type: string
+            format: ObjectId
   NewBranch:
     required:
       - organizationId
@@ -140,6 +141,16 @@ definitions:
         type: array
         items:
           type: string
+      coverages:
+        type: array
+        items:
+          type: string
+          enum:
+            - Local
+            - State
+            - Regional
+            - National
+            - International
   Organization:
     required:
       - name
@@ -154,12 +165,17 @@ definitions:
         type: string
       name:
         type: string
+      reviewIds:
+        type: array
+        items:
+          type: string
+          format: ObjectId
+        description: All reviews left by a user
+      
   Address:
     properties:
       coordinates:
-        type: array
-        items:
-          type: integer
+        type: string
       streetAddress:
         type: string
       country:
@@ -189,11 +205,15 @@ definitions:
         format: date
       createdBy:
         type: string
+        format: ObjectId
+        description: The User Id who created the object
       lastModifiedOn:
         type: string
         format: date
       lastModifiedBy:
         type: string
+        format: ObjectId
+        description: The User Id who last modified the object
   Error:
     required:
       - code
@@ -204,3 +224,14 @@ definitions:
         format: int32
       message:
         type: string
+  GeoPoint:
+    required:
+      - lat
+      - lon
+    properties:
+      lat:
+        type: number
+        format: float
+      lon:
+        type: number
+        format: float

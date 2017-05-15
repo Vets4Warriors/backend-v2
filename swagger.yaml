@@ -74,15 +74,16 @@ paths:
             $ref: '#/definitions/Error'
       
   /organizations/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the organization
+        required: true
+        type: string
+        x-example: '42'
     get:
       description: Returns an organization based on a single ID.
       operationId: find org by id
-      parameters:
-        - name: id
-          in: path
-          description: ID of organization to fetch
-          required: true
-          type: string
       responses:
         200:
           description: organization response
@@ -100,11 +101,12 @@ paths:
       operationId: update an org
       description: Updates a single organization
       parameters:
-        - name: id
-          in: path
-          description: ID of the organization to update
+        - name: organization
+          in: body
+          description: The organization to update against
           required: true
-          type: string
+          schema:
+            $ref: '#/definitions/Organization'
       responses:
         200:
           description: organization updated
@@ -125,12 +127,6 @@ paths:
     delete:
       description: deletes a single organization based on the ID supplied
       operationId: delete org by id
-      parameters:
-        - name: id
-          in: path
-          description: ID of organization to delete
-          required: true
-          type: string
       responses:
         204:
           description: organization deleted
@@ -205,15 +201,16 @@ paths:
           schema:
             $ref: '#/definitions/Error'
   /branches/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the branch
+        required: true
+        type: string
+        x-example: '90210'
     get:
       description: Returns a branch based on a single ID.
       operationId: find branch by id
-      parameters:
-        - name: id
-          in: path
-          description: ID of branch to fetch
-          required: true
-          type: string
       responses:
         200:
           description: branch response
@@ -231,11 +228,12 @@ paths:
       operationId: update a branch
       description: Updates a single branch
       parameters:
-        - name: id
-          in: path
-          description: ID of the branch to update
+        - name: branch
+          in: body
+          description: the branch to update against
           required: true
-          type: string
+          schema:
+            $ref: '#/definitions/Branch'
       responses:
         200:
           description: branch updated
@@ -275,15 +273,17 @@ paths:
             $ref: '#/definitions/Error'
             
   /branches/{id}/reviews:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the branch
+        required: true
+        type: string
+        x-example: '90210'
     get:
       description: |
         Returns all reviews for a branch that the user has access to
       parameters:
-        - name: id
-          in: path
-          description: ID of the branch
-          required: true
-          type: string
         - name: limit
           in: query
           description: maximum number of results to return
@@ -312,11 +312,6 @@ paths:
       operationId: create new review
       description: Creates a new review for a branch.
       parameters:
-        - name: id
-          in: path
-          description: ID of the branch
-          required: true
-          type: string
         - name: review
           in: body
           description: Review to add
@@ -429,6 +424,10 @@ definitions:
       website:
         type: string
         format: url
+    example:
+      email: 'v4wclr@gmail.com'
+      phone: '555-555-5555'
+      website: 'vets4warriors.com'
   Review:
     allOf:
       - $ref: '#/definitions/UserCreated'
@@ -450,6 +449,9 @@ definitions:
         maximum: 5
       comment:
         type: string
+    example:
+      rating: 4
+      comment: 'Were responsive and professional.'
   UserCreated:
     properties:
       createdOn:
@@ -476,6 +478,9 @@ definitions:
         format: int32
       message:
         type: string
+    example:
+      code: 404
+      message: 'Not found!'
   GeoPoint:
     required:
       - lat
@@ -487,3 +492,6 @@ definitions:
       lon:
         type: number
         format: float
+    example:
+      lat: 37.402
+      lon: -122.078

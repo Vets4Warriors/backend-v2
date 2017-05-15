@@ -14,6 +14,7 @@ info:
 host: clr.vets4warriors.com
 basePath: /api
 schemes:
+  - http
   - https
 consumes:
   - application/json

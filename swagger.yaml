@@ -9,8 +9,8 @@ info:
     email: clrv4w@gmail.com
     url: https://clr.vets4warriors.com/help
   license:
-    name: MIT
-    url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
+    name: Proprietary
+    url: http://www.binpress.com/license/view/l/31a63919b465ac54dd17595042cc0aa6
 host: clr.vets4warriors.com
 basePath: /api
 schemes:
@@ -20,6 +20,129 @@ consumes:
 produces:
   - application/json
 paths:
+  /organizations:
+    get:
+      description: |
+        Returns all organizations from the system that the user has access to
+      parameters:
+        - name: limit
+          in: query
+          description: maximum number of results to return
+          required: false
+          type: integer
+          format: int32
+        - name: page
+          in: query
+          description: page of results to receive
+          required: false
+          default: 1
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Organization response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Organization'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      operationId: create new organization
+      description: Creates a new organization under a organization.
+      parameters:
+        - name: organization
+          in: body
+          description: Organization to add
+          required: true
+          schema:
+            $ref: '#/definitions/NewOrganization'
+      responses:
+        201:
+          description: organization created response
+          schema:
+            $ref: '#/definitions/Organization'
+        400:
+          description: bad requrest error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      
+  /organizations/{id}:
+    get:
+      description: Returns an organization based on a single ID.
+      operationId: find org by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of organization to fetch
+          required: true
+          type: string
+      responses:
+        200:
+          description: organization response
+          schema:
+            $ref: '#/definitions/Organization'
+        404:
+          description: organization not found
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      operationId: update an org
+      description: Updates a single organization
+      parameters:
+        - name: id
+          in: path
+          description: ID of the organization to update
+          required: true
+          type: string
+      responses:
+        200:
+          description: organization updated
+          schema:
+            $ref: '#/definitions/Organization'
+        400:
+          description: bad request
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: organization not found
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      description: deletes a single organization based on the ID supplied
+      operationId: delete org by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of organization to delete
+          required: true
+          type: string
+      responses:
+        204:
+          description: organization deleted
+        404:
+          description: organization not found
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    
   /branches:
     get:
       operationId: find branches
@@ -40,6 +163,13 @@ paths:
           required: false
           type: integer
           format: int32
+        - name: page
+          in: query
+          description: page of results to receive
+          required: false
+          default: 1
+          type: integer
+          format: int32
       responses:
         200:
           description: Branch response
@@ -55,15 +185,15 @@ paths:
       operationId: create new branch
       description: Creates a new branch under a organization.
       parameters:
-        - name: pet
+        - name: branch
           in: body
-          description: Pet to add to the store
+          description: Branch to add
           required: true
           schema:
             $ref: '#/definitions/NewBranch'
       responses:
-        200:
-          description: branch response
+        201:
+          description: branch created response
           schema:
             $ref: '#/definitions/Branch'
         400:
@@ -97,13 +227,39 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
+    put:
+      operationId: update a branch
+      description: Updates a single branch
+      parameters:
+        - name: id
+          in: path
+          description: ID of the branch to update
+          required: true
+          type: string
+      responses:
+        200:
+          description: branch updated
+          schema:
+            $ref: '#/definitions/Branch'
+        400:
+          description: bad request
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: branch not found
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
     delete:
       description: deletes a single branch based on the ID supplied
       operationId: delete branch by id
       parameters:
         - name: id
           in: path
-          description: ID of pet to delete
+          description: ID of branch to delete
           required: true
           type: string
       responses:
@@ -117,12 +273,78 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
+            
+  /branches/{id}/reviews:
+    get:
+      description: |
+        Returns all reviews for a branch that the user has access to
+      parameters:
+        - name: id
+          in: path
+          description: ID of the branch
+          required: true
+          type: string
+        - name: limit
+          in: query
+          description: maximum number of results to return
+          required: false
+          type: integer
+          format: int32
+        - name: page
+          in: query
+          description: page of results to receive
+          required: false
+          default: 1
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Reviews response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Review'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      operationId: create new review
+      description: Creates a new review for a branch.
+      parameters:
+        - name: id
+          in: path
+          description: ID of the branch
+          required: true
+          type: string
+        - name: review
+          in: body
+          description: Review to add
+          required: true
+          schema:
+            $ref: '#/definitions/NewReview'
+      responses:
+        201:
+          description: review created response
+          schema:
+            $ref: '#/definitions/Review'
+        400:
+          description: bad requrest error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
 definitions:
   Branch:
     allOf:
       - $ref: '#/definitions/NewBranch'
-      - required:
-        - id
+      - $ref: '#/definitions/UserCreated'
+      - type: object
+        required:
+          - id
         properties:
           id:
             type: string
@@ -152,13 +374,23 @@ definitions:
             - National
             - International
   Organization:
+    allOf:
+      - $ref: '#/definitions/NewOrganization'
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            type: string
+            format: ObjectId
+  NewOrganization:
     required:
       - name
     properties:
       name:
         type: string
-      tag:
-        type: string
+      contact:
+          $ref: '#/definitions/Contact'
   User:
     properties:
       id:
@@ -171,11 +403,10 @@ definitions:
           type: string
           format: ObjectId
         description: All reviews left by a user
-      
   Address:
     properties:
       coordinates:
-        type: string
+        $ref: '#/definitions/GeoPoint'
       streetAddress:
         type: string
       country:
@@ -198,6 +429,27 @@ definitions:
       website:
         type: string
         format: url
+  Review:
+    allOf:
+      - $ref: '#/definitions/UserCreated'
+      - $ref: '#/definitions/NewReview'
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            type: string
+            format: ObjectId
+  NewReview:
+    required:
+      - rating
+    properties:
+      rating:
+        type: integer
+        minimum: 1
+        maximum: 5
+      comment:
+        type: string
   UserCreated:
     properties:
       createdOn:

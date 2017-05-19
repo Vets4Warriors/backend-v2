@@ -372,6 +372,7 @@ definitions:
   Organization:
     allOf:
       - $ref: '#/definitions/NewOrganization'
+      - $ref: '#/definitions/UserCreated'
       - type: object
         required:
           - id

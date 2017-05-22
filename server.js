@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './keys.private.env' }); // Setup environment
+require('dotenv').config(); // Setup environment
 const express = require('express');
 const path = require('path');
 const passport = require('passport');
@@ -13,20 +13,27 @@ const apiRouter = require('./lib/routes');
 
 const app = express();
 app.set('env', config.env);
-// Templating engine
-app.set('view engine', 'pug');
 
 // Logging - to stdout in development, to files in production
 app.use(httpLogger);
 
+// Allow all cross origin requests for now.
+// Todo: Whitelist
 app.use(cors());
 
 // Passport + session setup
-app.use(session({
+const sessionOpts = {
   secret: config.session.secret,
   saveUninitialized: true,
   resave: false
-}));
+};
+
+if (app.get('env') === 'production') {
+  const MongoStore = require('connect-mongo')(session);
+  sessionOpts.store = new MongoStore(mongoConnect.storeOptions);
+}
+
+app.use(session(sessionOpts));
 const { strategy, deserializeUser, serializeUser } = auth;
 passport.use(strategy);
 passport.serializeUser(serializeUser);
@@ -68,7 +75,7 @@ if (app.get('env') === 'production') {
 app.use(errorReporter);
 
 function start() {
-  // Databse setup
+  // Database setup
   mongoConnect();
 
   app.listen(config.port, () => {

@@ -1,10 +1,7 @@
 require('dotenv').config(); // Setup environment
 const express = require('express');
 const path = require('path');
-const passport = require('passport');
-const session = require('express-session');
 const cors = require('cors');
-const auth = require('./lib/auth');
 const config = require('./lib/utils/config');
 const { httpLogger, logger } = require('./lib/utils/loggers');
 const { errorHandler, devErrorHandler, errorReporter } = require('./lib/errors');
@@ -20,26 +17,6 @@ app.use(httpLogger);
 // Allow all cross origin requests for now.
 // Todo: Whitelist
 app.use(cors());
-
-// Passport + session setup
-const sessionOpts = {
-  secret: config.session.secret,
-  saveUninitialized: true,
-  resave: false
-};
-
-if (app.get('env') === 'production') {
-  const MongoStore = require('connect-mongo')(session);
-  sessionOpts.store = new MongoStore(mongoConnect.storeOptions);
-}
-
-app.use(session(sessionOpts));
-const { strategy, deserializeUser, serializeUser } = auth;
-passport.use(strategy);
-passport.serializeUser(serializeUser);
-passport.deserializeUser(deserializeUser);
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Route setup
 app.use('/api', apiRouter);

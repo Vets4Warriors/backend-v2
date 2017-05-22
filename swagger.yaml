@@ -26,19 +26,8 @@ paths:
       description: |
         Returns all organizations from the system that the user has access to
       parameters:
-        - name: limit
-          in: query
-          description: maximum number of results to return
-          required: false
-          type: integer
-          format: int32
-        - name: page
-          in: query
-          description: page of results to receive
-          required: false
-          default: 1
-          type: integer
-          format: int32
+        - $ref: '#/parameters/LimitParam'
+        - $ref: '#/parameters/PageParam'
       responses:
         200:
           description: Organization response
@@ -154,19 +143,8 @@ paths:
           collectionFormat: csv
           items:
             type: string
-        - name: limit
-          in: query
-          description: maximum number of results to return
-          required: false
-          type: integer
-          format: int32
-        - name: page
-          in: query
-          description: page of results to receive
-          required: false
-          default: 1
-          type: integer
-          format: int32
+        - $ref: '#/parameters/LimitParam'
+        - $ref: '#/parameters/PageParam'
       responses:
         200:
           description: Branch response
@@ -497,3 +475,19 @@ definitions:
     example:
       lat: 37.402
       lon: -122.078
+parameters:
+  LimitParam:
+    name: limit
+    in: query
+    description: maximum number of results to return
+    required: false
+    type: integer
+    format: int32
+  PageParam:
+    name: page
+    in: query
+    description: page of results to receive
+    required: false
+    default: 1
+    type: integer
+    format: int32

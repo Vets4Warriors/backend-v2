@@ -1,25 +1,20 @@
 {
   "development": {
     "port": 3000,
+    "version": "2.0",
     "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
-    "server": "http://localhost:3000",
     "session": {
       "secret": "cats"
     },
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
-      "database": "vets4warriors-clr"
-    },
-    "auth": {
-      "google": {
-        "clientID": "421605880449-ob4g7b2sopkmvvkgrm0lsfept9c7m3cb.apps.googleusercontent.com"
-      }
+      "database": "dev-vets4warriors-clr"
     }
   },
   "production": {
     "port": 3000,
     "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
-    "server": "",
+    "version": "2.0",
     "session": {
       "secret": "dogs"
     },
@@ -32,16 +27,12 @@
       "errorFilename": "errors.log",
       "databaseFilename": "db.log",
       "consoleFilename": "console.log"
-    },
-    "auth": {
-      "google": {
-        "clientID": ""
-      }
     }
   },
   "testing": {
     "port": 3001,
     "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
+    "version": "2.0",
     "server": "http://localhost:3001",
     "session": {
       "secret": "pickles"
@@ -49,11 +40,6 @@
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
       "database": "test-vets4warriors-clr"
-    },
-    "auth": {
-      "google": {
-        "clientID": "115737848275-l446qd3spem8qv1e391eej5k3fm2omc9.apps.googleusercontent.com"
-      }
     }
   }
 }

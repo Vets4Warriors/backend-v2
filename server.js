@@ -22,20 +22,13 @@ app.use(cors());
 app.use('/api', apiRouter);
 
 // Send our frontend client app
+// Note: In development, the client is run with `ng serve` instead
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/dist/index.html'))
 });
 
 if (app.get('env') === 'production') {
-  // Static directory
-  // The dist directory in the client is where angular builds to
-  // In development, will be run separately
-  app.use(express.static(path.join(__dirname, 'client', 'dist')));
-  app.get('*', (req, res) => {
-    // Send to the index
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-  });
-
   // @see https://expressjs.com/en/advanced/best-practice-performance.html#in-code
   // Compress everything
   const compression = require('compression');

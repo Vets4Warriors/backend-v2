@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: 2.0.0
+  version: "2.0"
   title: "Vets 4 Warriors CLR"
   description: The Counselor's Laptop Resource API, which currently powers the CLR website.
   termsOfService: https://clr.vets4warriors.com/terms/

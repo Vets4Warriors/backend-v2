@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const appConfig = require('../lib/utils/config');
 const { logger } = require('../lib/utils/loggers');
 const mongoSetup = require('../lib/utils/mongo');

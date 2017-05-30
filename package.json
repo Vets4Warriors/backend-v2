@@ -9,12 +9,15 @@
   "scripts": {
     "start": "node server.js",
     "start-prod": "cross-env NODE_ENV=production node server.js",
+    "start-dev": "cross-env NODE_ENV=development node server.js",
     "test-mocha": "cross-env NODE_ENV=testing mocha --reporter=nyan ./test/**/*.spec.js",
-    "test-dredd": "dredd",
+    "test-dredd": "cross-env NODE_ENV=testing dredd",
     "test": "yarn run test-mocha && yarn run test-dredd",
     "lint": "eslint --fix --ext .js lib/**",
     "clean": "rm -rf logs",
-    "servedocs": "swagger serve swagger.yaml"
+    "servedocs": "swagger serve swagger.yaml",
+    "migrate": "migrate --template-file ./migrations/template.js",
+    "migrate-debug": "node $NODE_DEBUG_OPTION ./node_modules/.bin/migrate --template-file ./migrations/template.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +41,7 @@
     "http-errors": "^1.6.1",
     "http-status-codes": "^1.1.6",
     "jwks-rsa": "^1.1.1",
+    "migrate": "^0.2.3",
     "mongoose": "^4.9.3",
     "mongoose-geojson-schema": "^2.1.2",
     "mongoose-paginate": "^5.0.3",

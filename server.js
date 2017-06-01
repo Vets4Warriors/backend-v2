@@ -19,7 +19,7 @@ app.use(httpLogger);
 app.use(cors());
 
 // Route setup
-app.use('/api', apiRouter);
+app.use(`/api/${config.version}`, apiRouter);
 
 // Send our frontend client app
 // Note: In development, the client is run with `ng serve` instead

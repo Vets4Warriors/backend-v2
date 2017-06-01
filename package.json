@@ -13,7 +13,7 @@
     "test-mocha": "cross-env NODE_ENV=testing mocha --reporter=nyan ./test/**/*.spec.js",
     "test-dredd": "cross-env NODE_ENV=testing dredd",
     "test": "yarn run test-mocha && yarn run test-dredd",
-    "lint": "eslint --fix --ext .js lib/**",
+    "lint": "eslint --fix --ext .js lib/**/* migrations/**/*",
     "clean": "rm -rf logs",
     "servedocs": "swagger serve swagger.yaml",
     "migrate": "migrate --template-file ./migrations/template.js",

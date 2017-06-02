@@ -44,11 +44,11 @@ if (app.get('env') === 'production') {
 
 app.use(errorReporter);
 
-function start() {
+async function start() {
   // Database setup
-  mongoConnect();
+  await mongoConnect();
 
-  app.listen(config.port, () => {
+  return app.listen(config.port, () => {
     logger.info(`${config.name} is listening on port ${config.port}`);
   });
 }

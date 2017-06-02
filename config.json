@@ -3,9 +3,6 @@
     "port": 3000,
     "version": "2.0",
     "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
-    "session": {
-      "secret": "cats"
-    },
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
       "database": "dev-vets4warriors-clr"
@@ -15,9 +12,6 @@
     "port": 3000,
     "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
     "version": "2.0",
-    "session": {
-      "secret": "dogs"
-    },
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
       "database": "vets4warriors-clr"
@@ -34,12 +28,15 @@
     "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
     "version": "2.0",
     "server": "http://localhost:3001",
-    "session": {
-      "secret": "pickles"
-    },
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
       "database": "test-vets4warriors-clr"
+    },
+    "auth0": {
+      "clientId": "hjDO7i3dXLrWyISp7ZIxExw122gCldJ1",
+      "clientSecret": "",
+      "audience": "https://clr.vets4warriors.com/api",
+      "grantType": "client_credentials"
     }
   }
 }

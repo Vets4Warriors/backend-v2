@@ -3,6 +3,7 @@ const chaiAsPromised = require('chai-as-promised');
 const chaiHttp = require('chai-http');
 const HttpStatus = require('http-status-codes');
 const config = require('../../lib/utils/config');
+const { generateAuthToken, makeAuthHeader } = require('../utils');
 const { connect, disconnect, drop } = require('../../lib/utils/mongo');
 const server = require('../../server');
 
@@ -11,13 +12,13 @@ chai.use(chaiHttp);
 
 chai.should();
 
-const baseUrl = '/api/organizations';
+const baseUrl = `/api/${config.version}/organizations`;
 
 const testOrgData = {
   "contact": {
     "email": "v4wclr@gmail.com",
     "phone": "555-555-5555",
-    "website": "vets4warriors.com"
+    "website": "http://vets4warriors.com"
   },
   "name": "testOrg"
 };
@@ -31,7 +32,10 @@ const noNameTestOrgData = {
 
 
 describe('Organizations API', () => {
-  before(() => {
+  let authHeader;
+  before(async () => {
+    const token = await generateAuthToken();
+    authHeader = makeAuthHeader(token);
     return connect();
   });
 
@@ -42,29 +46,49 @@ describe('Organizations API', () => {
 
   describe('#get /organizations', () => {
     it('should respond', async () => {
-      return chai.request(server).get(baseUrl).should.eventually.resolve;
+      const res = await chai.request(server)
+          .get(baseUrl)
+          .set('authorization', authHeader);
+
+      res.body.should.be.an('array');
+      res.body.should.be.an('array').that.is.empty;
+
+      return Promise.resolve();
     })
   });
 
   describe('#post /organizations', () => {
-    it('should successfully create', async (done) => {
+    it('should successfully create', async () => {
       try {
-        // const res = await chai.request(server).post(baseUrl).send(testOrgData);
+        const res = await chai.request(server)
+            .post(baseUrl)
+            .set('authorization', authHeader)
+            .send(testOrgData);
+        console.log(res);
       } catch (err) {
-        throw err;
+        console.error(err);
+        return Promise.reject();
       }
 
-      done();
+
+      return Promise.resolve();
     });
 
-    it('should reject bad data', async (done) => {
+    it('should reject bad data', async () => {
       try {
-        const res = await chai.request(server).post(baseUrl).send(noNameTestOrgData);
-        done("Didn't reject.");
+        await chai.request(server)
+            .post(baseUrl)
+            .set('authorization', authHeader)
+            .send(noNameTestOrgData);
+        // Should throw an error
+        return Promise.reject();
       } catch (err) {
-        err.should.be.an.instanceof(Error);
+        err.should.be.an('error');
+        err.should.have.property('status', 400);
+        err.should.have.property('message');
+        err.message.should.include('Bad Request');
+        return Promise.resolve();
       }
-      done();
     })
 
   })

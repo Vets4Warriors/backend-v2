@@ -4,6 +4,7 @@ const chaiHttp = require('chai-http');
 const HttpStatus = require('http-status-codes');
 const config = require('../../lib/utils/config');
 const { connect, disconnect, drop } = require('../../lib/utils/mongo');
+const { generateAuthToken, makeAuthHeader } = require('../utils');
 const server = require('../../server');
 
 const expect = chai.expect;
@@ -12,10 +13,13 @@ chai.use(chaiHttp);
 
 chai.should();
 
-const baseUrl = '/api/branches';
+const baseUrl = `/api/${config.version}/branches`;
 
 describe('Branches API', () => {
-  before(() => {
+  let authHeader;
+  before(async () => {
+    const token = await generateAuthToken();
+    authHeader = makeAuthHeader(token);
     return connect();
   });
 
@@ -26,8 +30,11 @@ describe('Branches API', () => {
 
   describe('#get /branches', () => {
     it('should respond with an array', async () => {
-      return chai.request(server)
-          .get(baseUrl).should.be.fulfilled;
+      const res = await chai.request(server)
+          .get(baseUrl)
+          .set('authorization', authHeader);
+
+      return Promise.resolve();
     })
   })
 });

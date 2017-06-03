@@ -6,6 +6,17 @@
     "mongo": {
       "serverUri": "mongodb://localhost:27017",
       "database": "dev-vets4warriors-clr"
+    },
+    "auth0": {
+      "issuer": "https://vets4warriors.auth0.com/",
+      "audience": "https://clr.vets4warriors.com/api",
+      "algorithms": ["RS256"],
+      "jwks": {
+        "cache": true,
+        "rateLimit": true,
+        "jwksRequestsPerMinute": 5,
+        "jwksUri": "https://vets4warriors.auth0.com/.well-known/jwks.json"
+      }
     }
   },
   "production": {
@@ -16,6 +27,17 @@
       "serverUri": "mongodb://localhost:27017",
       "database": "vets4warriors-clr"
     },
+    "auth0": {
+      "issuer": "https://vets4warriors.auth0.com/",
+      "audience": "https://clr.vets4warriors.com/api",
+      "algorithms": ["RS256"],
+      "jwks": {
+        "cache": true,
+        "rateLimit": true,
+        "jwksRequestsPerMinute": 5,
+        "jwksUri": "https://vets4warriors.auth0.com/.well-known/jwks.json"
+      }
+    },
     "logs": {
       "accessFilename": "access.log",
       "errorFilename": "errors.log",
@@ -23,6 +45,7 @@
       "consoleFilename": "console.log"
     }
   },
+
   "testing": {
     "port": 3001,
     "name": "Vets 4 Warriors Counselor Laptop Resource 2.0",
@@ -35,8 +58,16 @@
     "auth0": {
       "clientId": "hjDO7i3dXLrWyISp7ZIxExw122gCldJ1",
       "clientSecret": "",
+      "grantType": "client_credentials",
       "audience": "https://clr.vets4warriors.com/api",
-      "grantType": "client_credentials"
+      "issuer": "https://vets4warriors.auth0.com/",
+      "algorithms": ["RS256"],
+      "jwks": {
+        "cache": true,
+        "rateLimit": true,
+        "jwksRequestsPerMinute": 5,
+        "jwksUri": "https://vets4warriors.auth0.com/.well-known/jwks.json"
+      }
     }
   }
 }

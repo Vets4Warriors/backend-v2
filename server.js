@@ -17,6 +17,7 @@ app.use(httpLogger);
 // Allow all cross origin requests for now.
 // Todo: Whitelist
 app.use(cors());
+app.options('*', cors());
 
 // Route setup
 app.use(`/api/${config.version}`, apiRouter);

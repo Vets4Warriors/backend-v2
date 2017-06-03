@@ -100,7 +100,6 @@ exports.up = async function(next) {
     next(err);
   }
 
-
   // Finish by dropping the location collection
   await Location.collection.drop();
   await mongoSetup.disconnect();
@@ -117,21 +116,19 @@ exports.down = async function(next) {
   await mongoSetup.connect();
   logger.log('database', 'migration: DOWN v2->v1');
   try {
+    // Drop version schemas
+    await mongoose.connection.db.dropCollection('Organization_versions');
+    await mongoose.connection.db.dropCollection('Branch_versions');
+
     // Drop organizations
     await Org.collection.drop();
     // Turn each branch into a location
 
     // Drop Users
     await User.collection.drop();
-
     await Branch.collection.drop();
-
-    // Drop version schemas
-    await mongoose.connection.db.dropCollection('Organization_versions');
-    await mongoose.connection.db.dropCollection('Branch_versions');
-
   } catch (err) {
-    next(err);
+     next(err);
   }
 
   await mongoSetup.disconnect();

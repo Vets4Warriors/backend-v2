@@ -8,6 +8,8 @@
       "database": "dev-vets4warriors-clr"
     },
     "auth0": {
+      "domain": "vets4warriors.auth0.com",
+      "clientId": "SUCPlEyQQF2RJJL8XxG4HHPsMXhREXtk",
       "issuer": "https://vets4warriors.auth0.com/",
       "audience": "https://clr.vets4warriors.com/api",
       "algorithms": ["RS256"],
@@ -28,6 +30,8 @@
       "database": "vets4warriors-clr"
     },
     "auth0": {
+      "domain": "vets4warriors.auth0.com",
+      "clientId": "SUCPlEyQQF2RJJL8XxG4HHPsMXhREXtk",
       "issuer": "https://vets4warriors.auth0.com/",
       "audience": "https://clr.vets4warriors.com/api",
       "algorithms": ["RS256"],
@@ -56,7 +60,7 @@
       "database": "test-vets4warriors-clr"
     },
     "auth0": {
-      "clientId": "hjDO7i3dXLrWyISp7ZIxExw122gCldJ1",
+      "clientId": "SUCPlEyQQF2RJJL8XxG4HHPsMXhREXtk",
       "clientSecret": "",
       "grantType": "client_credentials",
       "audience": "https://clr.vets4warriors.com/api",

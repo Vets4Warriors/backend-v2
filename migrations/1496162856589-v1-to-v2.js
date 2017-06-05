@@ -5,15 +5,14 @@ const mongoSetup = require('../lib/utils/mongo');
 const LocationSchema = require('./schemas/v1/Location');
 const BranchSchema = require('../lib/schemas/Branch');
 const OrgSchema = require('../lib/schemas/Organization');
-const UserSchema = require('../lib/schemas/User');
+const { User } = require('../lib/auth');
 
 const Location = mongoose.model('Location', LocationSchema);
 const Branch = mongoose.model('Branch', BranchSchema);
 const Org = mongoose.model('Organization', OrgSchema);
-const User = mongoose.model('User', UserSchema);
 
 // Create the pseudo-admin user
-const admin = new User({ displayName: 'Automated Admin'});
+const admin = new User({ user_id: 'auth0|5935d802e4a742283dfd8324' });
 
 function v1AddressToV2(address) {
   return {
@@ -92,7 +91,6 @@ exports.up = async function(next) {
   logger.log('database', 'migration: UP v1->v2');
 
   try {
-    await admin.save();
     const locCursor = await Location.find({}).cursor();
     await locCursor.eachAsync(convertLocation);
   } catch (err) {
@@ -100,11 +98,45 @@ exports.up = async function(next) {
     next(err);
   }
 
-  // Finish by dropping the location collection
-  await Location.collection.drop();
+  // Finish by dropping the location collection if exists
+  const colls = await getCollectionNames();
+  if (colls.indexOf(Location.collection.collectionName) !== -1) {
+    await Location.collection.drop();
+  }
   await mongoSetup.disconnect();
   next();
 };
+
+
+/**
+ * Async wrappers for two used db functions
+ * @return {Promise}
+ */
+
+async function getCollectionNames() {
+  return new Promise(async (resolve, reject) => {
+    mongoose.connection.db.listCollections()
+        .toArray((err, colls) => {
+          if (err) {
+            reject(err);
+          }
+          const names = colls.map(coll => coll.name);
+          resolve(names);
+        });
+  })
+}
+
+async function dropCollection(collName) {
+  return new Promise((resolve, reject) => {
+    mongoose.connection.db.dropCollection(collName,
+        (err) => {
+          if (err) {
+            reject(err);
+          }
+          resolve();
+        });
+  })
+}
 
 /**
  * Drop down from v2 to v1
@@ -116,17 +148,25 @@ exports.down = async function(next) {
   await mongoSetup.connect();
   logger.log('database', 'migration: DOWN v2->v1');
   try {
-    // Drop version schemas
-    await mongoose.connection.db.dropCollection('Organization_versions');
-    await mongoose.connection.db.dropCollection('Branch_versions');
+    // Todo: Turn each branch into a location
 
-    // Drop organizations
-    await Org.collection.drop();
-    // Turn each branch into a location
+    // Then drop all v2 collections
+    const collectionsToDrop = [
+      'Organization_versions',
+      'Branch_versions',
+      Org.collection.collectionName,
+      Branch.collection.collectionName,
+    ];
 
-    // Drop Users
-    await User.collection.drop();
-    await Branch.collection.drop();
+    // Hate callbacks but not worth another lib dependency
+    const names = await getCollectionNames();
+    for (const collName of collectionsToDrop) {
+      if (names.indexOf(collName) !== -1) {
+        await dropCollection(collName);
+      }
+    }
+
+
   } catch (err) {
      next(err);
   }

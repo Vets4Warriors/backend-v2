@@ -21,6 +21,6 @@ const locationSchema = new mongoose.Schema({
   comments: String,
   addedBy: String,
   addedOn: Date,
-});
+}, { collection: 'location' }); // v1 wasn't plural
 
 module.exports = locationSchema;

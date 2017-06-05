@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/fbueti/stevens-scheduler-2.0#readme",
   "dependencies": {
+    "auth0": "^2.6.0",
     "body-parser": "^1.17.1",
     "compression": "^1.6.2",
     "cors": "^2.8.3",
@@ -49,7 +50,6 @@
     "mongoose-type-email": "^1.0.5",
     "mongoose-type-url": "^1.0.2",
     "mongoose-version": "^1.1.0",
-    "passport": "^0.3.2",
     "passport-google-oauth20": "^1.0.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.3",

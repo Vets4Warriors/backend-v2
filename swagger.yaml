@@ -41,7 +41,7 @@ paths:
             $ref: '#/definitions/Error'
     post:
       operationId: create new organization
-      description: Creates a new organization under a organization.
+      description: Creates a new organization.
       parameters:
         - name: organization
           in: body
